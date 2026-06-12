@@ -17,9 +17,46 @@ Le projet demande de répondre à trois familles de questions à travers des vis
 
 ---
 
+## Visualisation 1 — Évolution temporelle & effets de mode
+
+> **Question adressée :** Comment les prénoms évoluent-ils dans le temps ? Certains sont-ils des phénomènes de mode ?
+
+**Notebook :** [visu1.ipynb](visu1.ipynb)
+
+### Description
+
+Line chart interactif affichant l'évolution des 10 prénoms les plus populaires et des prénoms détectés comme « effets de mode » (pic de popularité marqué, déclin rapide).
+
+| Contrôle | Effet |
+|----------|-------|
+| **Affichage** (radio) | Bascule entre nombre de naissances et pourcentage annuel |
+| **Type** (radio) | Affiche tous les prénoms ou uniquement les effets de mode |
+| **Prénom** (liste) | Isole un prénom spécifique |
+
+---
+
+## Visualisation 2 — Répartition géographique par région
+
+> **Question adressée :** Y a-t-il un effet régional ? La popularité d'un prénom varie-t-elle selon les régions ?
+
+**Notebook :** [Visu2.ipynb](Visu2.ipynb)
+
+### Description
+
+Dashboard composé d'une carte choroplèthe de France par région et d'un classement horizontal des régions, mis à jour en temps réel.
+
+| Contrôle | Effet |
+|----------|-------|
+| **Année** (slider 1900–2020) | Fait évoluer la carte et le classement |
+| **Prénom** (liste) | Choisit le prénom à observer |
+
+---
+
 ## Visualisation 3 — Gender Space × Évolution miroir
 
 > **Question adressée :** Y a-t-il des effets de genre ? La popularité des prénoms partagés entre filles et garçons évolue-t-elle de façon cohérente ?
+
+**Notebook :** [visu3.ipynb](visu3.ipynb)
 
 ### Aperçu
 
@@ -31,9 +68,7 @@ https://github.com/longhorncow/visualisation_mini_project/raw/visu3/Visualisatio
 
 > ▶ [Télécharger / visionner la vidéo de démonstration](Visualisation3.mp4)
 
----
-
-### Description de la visualisation
+### Description
 
 La visualisation est composée de **deux graphiques liés** :
 
@@ -55,8 +90,6 @@ Sélectionner un prénom dans le scatter affiche son évolution temporelle en mi
 - **Bleu (bas)** : part des naissances masculines (axe inversé)
 - L'axe s'adapte automatiquement à la plage d'années sélectionnée
 
----
-
 ### Contrôles interactifs
 
 | Contrôle | Effet |
@@ -65,8 +98,6 @@ Sélectionner un prénom dans le scatter affiche son évolution temporelle en mi
 | **Année début / fin** (sliders) | Filtre la plage temporelle — scatter et graphique miroir s'adaptent simultanément |
 | **Équilibre min** (slider 0 – 0.5) | Part minimale du sexe minoritaire : `0.05` = au moins 5 % de l'autre sexe requis · `0` = tous les prénoms · `0.5` = uniquement 50/50 |
 | **Clic sur une bulle** | Affiche l'évolution miroir du prénom sélectionné |
-
----
 
 ### Choix de design
 
@@ -82,8 +113,6 @@ Le scatter donne une vue globale de l'espace des prénoms mixtes à un instant d
 **Pourquoi le filtre d'équilibre ?**  
 Sans filtre, les prénoms très asymétriques (99 % filles) polluent le scatter et masquent les prénoms véritablement mixtes. Le slider permet de zoomer progressivement sur les prénoms partagés.
 
----
-
 ### Critique de la solution
 
 **Points forts**
@@ -93,7 +122,7 @@ Sans filtre, les prénoms très asymétriques (99 % filles) polluent le scatter 
 
 **Limites**
 - Les prénoms absents d'une décennie disparaissent du scatter même s'ils étaient populaires à d'autres périodes — la couleur « année du pic » compense partiellement ce manque.
-- L'encodage de la taille des bulles est difficile à calibrer 
+- L'encodage de la taille des bulles est difficile à calibrer
 
 ---
 
@@ -102,22 +131,16 @@ Sans filtre, les prénoms très asymétriques (99 % filles) polluent le scatter 
 ```bash
 # Créer l'environnement (Python 3.12)
 uv venv
-uv pip install altair pandas
+uv pip install altair pandas geopandas jupyter
 
 # Activer l'environnement
 source .venv/bin/activate
 
-# Générer la visualisation HTML
-python visualisation3.py
-# → ouvre visualisation3.html dans un navigateur
+# Lancer Jupyter
+jupyter notebook
 ```
 
-**Ou directement dans le notebook :**
-
-```bash
-uv pip install altair pandas jupyter
-.venv/bin/jupyter notebook visu*3*.ipynb
-```
+Ouvrir ensuite [visu1.ipynb](visu1.ipynb), [Visu2.ipynb](Visu2.ipynb) ou [visu3.ipynb](visu3.ipynb) selon la visualisation souhaitée.
 
 ---
 
@@ -128,9 +151,12 @@ uv pip install altair pandas jupyter
 │   ├── dpt2020.csv                          # Données INSEE (prénoms × département × année)
 │   ├── departements-version-simplifiee.geojson
 │   └── departements-avec-outre-mer.geojson
-├── visualisation3.py                        # Script principal — génère visualisation3.html
-├── visualisation3.png                       # Capture d'écran
-└── Visualisation3.mp4                       # Vidéo de démonstration
+├── visu1.ipynb                              # Visualisation 1 — Évolution temporelle & effets de mode
+├── Visu2.ipynb                              # Visualisation 2 — Carte par région
+├── visu3.ipynb                              # Visualisation 3 — Gender Space × Évolution miroir
+├── visualisation3.html                      # Export HTML interactif (visu 3)
+├── visualisation3.png                       # Capture d'écran (visu 3)
+└── Visualisation3.mp4                       # Vidéo de démonstration (visu 3)
 ```
 
 ---
