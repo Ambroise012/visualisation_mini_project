@@ -116,7 +116,7 @@ python visualisation3.py
 
 ```bash
 uv pip install altair pandas jupyter
-.venv/bin/jupyter notebook visualisation3.ipynb
+.venv/bin/jupyter notebook visu*3*.ipynb
 ```
 
 ---
