@@ -695,10 +695,14 @@ def build_visu3(prep, focus: str, y0: int, y1: int, balance: float,
         alt.Chart(label_src).mark_text(align="left", dx=6, fontSize=9)
         .encode(**xy, text="preusuel:N")
     )
-    scatter_chart = (diag + zone_labels + bubbles + focus_ring + text_labels).properties(
-        width=430, height=380,
-        title=alt.TitleParams("Gender Space — Filles vs Garçons",
-                              subtitle="Quels prénoms sont mixtes, féminins ou masculins ?"),
+    scatter_sel = alt.selection_point(name="scatter_sel", fields=["preusuel"], empty=True)
+    scatter_chart = (
+        (diag + zone_labels + bubbles.add_params(scatter_sel) + focus_ring + text_labels)
+        .properties(
+            width=430, height=380,
+            title=alt.TitleParams("Gender Space — Filles vs Garçons",
+                                  subtitle="Cliquez une bulle pour sélectionner un prénom"),
+        )
     )
 
     # ── Évolution miroir (prénom sélectionné) ────────────────────────────────
@@ -819,21 +823,40 @@ with tab3:
     st.subheader("Gender Space × évolution miroir")
     st.markdown(
         "Chaque bulle est un prénom positionné selon sa part chez les filles et les garçons. "
-        "Choisissez un **prénom**, une **plage d'années** et un seuil d'**équilibre** : "
-        "l'évolution miroir et la carte par région se mettent à jour."
+        "**Cliquez une bulle** pour sélectionner un prénom — le miroir et la carte se mettent à jour. "
+        "Utilisez les sliders pour filtrer la **plage d'années** et l'**équilibre**."
     )
     prep3 = prep_visu3(names)
     noms3 = prep3[4]
-    default_idx = noms3.index("CAMILLE") if "CAMILLE" in noms3 else 0
+
+    # Si un clic sur une bulle a été enregistré au rerun précédent,
+    # l'appliquer ICI avant que le widget soit instancié (règle Streamlit).
+    if "visu3_pending" in st.session_state:
+        st.session_state["visu3_focus"] = st.session_state.pop("visu3_pending")
+
+    if "visu3_focus" not in st.session_state:
+        st.session_state["visu3_focus"] = "CAMILLE" if "CAMILLE" in noms3 else noms3[0]
+
     c1, c2, c3 = st.columns([2, 3, 2])
     with c1:
-        focus = st.selectbox("Prénom", options=noms3, index=default_idx)
+        st.selectbox("Prénom", options=noms3, key="visu3_focus")
+    focus = st.session_state["visu3_focus"]
     with c2:
         yr = st.slider("Plage d'années", 1900, 2019, (1990, 2019))
     with c3:
         bal = st.slider("Équilibre min.", 0.0, 0.5, 0.05, 0.01,
                         help="Part minimale du sexe minoritaire (0.5 = uniquement 50/50)")
+
     geo_dept = load_geojson(str(GEO_DEPT_PATH))
-    st.altair_chart(
-        build_visu3(prep3, focus, yr[0], yr[1], bal, geo_dept), width="content"
-    )
+    chart3 = build_visu3(prep3, focus, yr[0], yr[1], bal, geo_dept)
+
+    event3 = st.altair_chart(chart3, on_select="rerun", use_container_width=False)
+
+    # Stocker le clic dans une clé SÉPARÉE (pas la clé du widget)
+    # → sera appliqué au début du prochain rerun, avant l'instanciation du widget
+    sel_pts = (event3.selection or {}).get("scatter_sel", [])
+    if sel_pts:
+        clicked = sel_pts[0].get("preusuel", "")
+        if clicked and clicked in noms3 and clicked != focus:
+            st.session_state["visu3_pending"] = clicked
+            st.rerun()
