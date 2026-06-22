@@ -25,17 +25,48 @@ The project aims to answer three main questions through interactive visualizatio
 
 ### Preview
 
-![Visualization 1](visu1.png)
+<img src="img/visu11.png" alt="Visualization 1-1" width="500">
+<img src="img/visu12.png" alt="Visualization 1-2" width="500">
 
 ### Description
 
-Interactive line chart showing the evolution of the 10 most popular first names and names identified as **trend-driven names** (sharp popularity peak followed by a rapid decline).
+This interactive visualization shows how the popularity of French first names evolved between 1900 and 2020, either in absolute numbers of births or as a percentage of all births in a given year. It allows users to explore and compare historically popular, trend-driven, growing, declining, stable, and event-related names while highlighting potential links between naming patterns and major historical events.
 
-| Control                          | Effect                                                |
-| -------------------------------- | ----------------------------------------------------- |
-| **Display Mode** (radio buttons) | Switch between number of births and annual percentage |
-| **Type** (radio buttons)         | Display all names or only trend-driven names          |
-| **First Name** (dropdown list)   | Isolate a specific name                               |
+### Questions Answered by the Visualization
+
+**Historical Popularity**
+
+* Which names have been the most popular in France over the period 1900–2020?
+* How has the popularity of historically dominant names changed over time?
+
+**Trend-Driven Names** (effet de mode)
+
+* Which names experienced short-lived popularity spikes?
+* Which names were strongly associated with specific periods or generations?
+
+**Growing Names**
+
+* Which names have shown sustained growth in recent decades?
+
+**Declining Names**
+
+* Which names were popular in the past but are uncommon today?
+
+**Stable Names**
+
+* Which names have maintained relatively consistent popularity across generations?
+
+**Event-Related Names**
+
+* Do major historical events coincide with changes in the popularity of certain names?
+* Do names associated with public figures, athletes, or celebrities experience popularity surges after notable events?
+
+**Comparisons**
+
+* How do different names compare across the same time period?
+* Do observed trends change when popularity is measured as percentages rather than absolute birth counts?
+* Which names dominate a given period relative to other categories of names?
+
 
 ---
 
@@ -47,11 +78,43 @@ Interactive line chart showing the evolution of the 10 most popular first names 
 
 ### Preview
 
-![Visualization 2](visu2.png)
+<img src="img/visu2.png" alt="Visualization 2" width="500">
 
 ### Description
 
-Dashboard combining a choropleth map of France by region and a horizontal ranking of regions, updated in real time.
+This interactive choropleth map explores the geographical distribution of first names across France. For any selected name and year, regions are colored according to their level of representation relative to the national average. The visualization uses a normalized index, where **1 indicates the national average**, values above 1 indicate **overrepresentation**, and values below 1 indicate **underrepresentation**. Users can interact with the map to investigate regional naming preferences and access more detailed department-level information.
+
+### Questions Answered by the Visualization
+
+**Regional Effects**
+
+* Is there a regional effect in the distribution of first names across France?
+* Which regions exhibit naming patterns that differ significantly from the national average?
+
+**Regional Popularity**
+
+* Which first names are overrepresented or underrepresented in specific regions?
+* How does the geographic concentration of a name change over time?
+
+**Local vs National Trends**
+
+* To what extent does local popularity reflect national popularity?
+* Are some names nationally common but regionally concentrated?
+
+**Spatial Comparisons**
+
+* How do different regions compare in their preference for a given name?
+* Which areas show the strongest deviations from national naming patterns?
+
+### Improvements Compared to the Previous Version
+
+Several enhancements were implemented to improve readability and interpretation:
+
+* Regional values are now normalized using shares rather than raw birth counts, making comparisons more meaningful.
+* The legend has been simplified to make regional rankings easier to interpret.
+* A reference line at index 1 clearly identifies the national average.
+* Clicking on a region provides access to department-level details for deeper exploration.
+
 
 | Control                        | Effect                           |
 | ------------------------------ | -------------------------------- |
@@ -68,15 +131,56 @@ Dashboard combining a choropleth map of France by region and a horizontal rankin
 
 ### Preview
 
-![Visualization 3 — Gender Space and mirrored chart](visualisation3.png)
-
-### Interactive Demonstration
-
-> ▶ [Download / watch the demonstration video](Visualisation3.mp4)
+<img src="img/visu3.png" alt="Visualization 3" width="500">
 
 ### Description
 
-The visualization consists of **two linked charts**:
+This interactive dashboard combines three coordinated views to explore how first names given to both sexes evolve across time, gender, and geography. The **Gender Space** scatter plot positions each mixed-gender name according to its popularity among girls and boys, with bubble size representing total births and color indicating the year of peak popularity. Selecting a name updates a **mirrored area chart**, showing its evolution separately for each sex, and a **cultural regions map**, highlighting whether the name is more frequently associated with boys or girls across different cultural regions of France. Users can adjust time sliders to focus on specific periods and observe how naming patterns change over time.
+
+### Questions Answered by the Visualization
+
+**Gender Effects**
+
+* Do names given to both sexes exhibit gender-specific popularity patterns?
+* How strongly is each mixed-gender name associated with boys or girls?
+
+**Evolution Through Time**
+
+* Does the popularity of a mixed-gender name evolve consistently across sexes?
+* Do some names switch from being predominantly male to predominantly female, or vice versa?
+
+**Regional Gender Differences**
+
+* Do gender associations for a given name vary across cultural regions?
+* Which regions display the strongest male or female preference for a name?
+
+**Comparisons Between Names**
+
+* Which names are nearly gender-balanced and which are strongly gendered?
+* How do different mixed-gender names compare in terms of popularity, gender balance, and historical trajectory?
+
+**Temporal Dynamics**
+
+* How do gender patterns change when focusing on different time periods?
+* Can the same name move from one gender-dominated category to another across generations?
+
+### Key Insights Highlighted by the Visualization
+
+* Gender effects are the norm rather than the exception: very few names lie close to the equality line where male and female popularity are identical.
+* Some names undergo substantial gender shifts over time. For example, **DOMINIQUE** transitions from predominantly male before the 1960s to predominantly female afterward, while **CLAUDE** remains comparatively balanced across the century.
+* The cultural-regions map dynamically recomputes gender ratios for the selected time window, allowing users to observe how regional gender preferences evolve through time.
+
+### Improvements Compared to the Previous Version
+
+Several modifications were introduced to strengthen the analytical value of the dashboard:
+
+* A new cultural-regions map was added to complement the gender and temporal analyses.
+* Regional gender ratios are now recalculated dynamically for the selected period instead of displaying static all-time averages.
+* The dashboard opens with the main research question and a note regarding the binary sex classification used in the dataset.
+* Suggested names are provided to encourage exploration of notable gender-transition cases.
+
+
+The visualization consists of **3 linked charts**:
 
 #### Right Panel — Gender Space (log-log scatter plot)
 
@@ -140,7 +244,6 @@ The scatter gives a global view of the mixed-name space at a given moment; the m
 **Why the balance filter?**
 Without filtering, highly asymmetric names (99% female) crowd the scatter and hide truly mixed names. The slider lets users zoom progressively onto shared names.
 
----
 
 ## Installation and Execution
 
